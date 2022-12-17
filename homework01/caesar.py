@@ -2,39 +2,35 @@ import typing as tp
 
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
-    """
-    Encrypts plaintext using a Caesar cipher.
+    for ch in plainText:
+        if ch.isalpha():
+            stayInAlphabet = ord(ch) + shift 
+            if stayInAlphabet > ord('z'):
+                stayInAlphabet -= 26
+            finalLetter = chr(stayInAlphabet)
+        cipherText = ""
+        cipherText += finalLetter
 
-    >>> encrypt_caesar("PYTHON")
-    'SBWKRQ'
-    >>> encrypt_caesar("python")
-    'sbwkrq'
-    >>> encrypt_caesar("Python3.6")
-    'Sbwkrq3.6'
-    >>> encrypt_caesar("")
-    ''
-    """
-    ciphertext = ""
-    # PUT YOUR CODE HERE
-    return ciphertext
+        print ("Your ciphertext is: ", cipherText)
+
+        return cipherText
+    
+    
 
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
-    """
-    Decrypts a ciphertext using a Caesar cipher.
+    for ch in plainText:
+        if ch.isalpha():
+            stayInAlphabet = ord(ch) - shift 
+            if stayInAlphabet < ord('z'):
+                stayInAlphabet += 26
+            finalLetter = chr(stayInAlphabet)
+        plainText = ""
+        plainrText -= finalLetter
 
-    >>> decrypt_caesar("SBWKRQ")
-    'PYTHON'
-    >>> decrypt_caesar("sbwkrq")
-    'python'
-    >>> decrypt_caesar("Sbwkrq3.6")
-    'Python3.6'
-    >>> decrypt_caesar("")
-    ''
-    """
-    plaintext = ""
-    # PUT YOUR CODE HERE
-    return plaintext
+        print ("Your ciphertext is: ", plainText)
+
+        return plainText
 
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
