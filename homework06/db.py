@@ -2,7 +2,9 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import sqlalchemy.exc
 
+from scraputils import get_news
 
 Base = declarative_base()
 engine = create_engine("sqlite:///news.db")
@@ -20,3 +22,12 @@ class News(Base):
     label = Column(String)
 
 Base.metadata.create_all(bind=engine)
+
+def create_db() -> None:
+    s = session()
+    host: list = get_news("https://news.ycombinator.com/", 24)
+    for i in range(700):
+        news = News(**host[i])
+        s.add(news)
+    s.commit()
+    return None
