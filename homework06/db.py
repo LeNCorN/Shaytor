@@ -23,9 +23,9 @@ class News(Base):
 
 Base.metadata.create_all(bind=engine)
 
-def create_db() -> None:
+def create_db():
     s = session()
-    host: list = get_news("https://news.ycombinator.com/", 24)
+    host = get_news("https://news.ycombinator.com/", 24)
     for i in range(700):
         news = News(**host[i])
         s.add(news)

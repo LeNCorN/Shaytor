@@ -36,30 +36,26 @@ def update_news():
     s.commit()
     redirect("/news")
 
-
-@route("/classify")
-def classify_news():
-    redirect("/recommendations")
-
-
 @route("/recommendations")
 def recommendations():
     s = session()
     rows = s.query(News).filter(News.label == None).all()
     already_classified_news = s.query(News).filter(News.label != None).all()
-    already_dict: dict[str, bool] = dict()
+    already_dict = dict()
     rows_list = []
     for row in already_classified_news:
-        host_label: bool = True if row.label == "good" else None
-        host_label: bool = False if row.label == "never" else host_label
-        host: dict = {row.title: host_label}
+        host_label = True if row.label == "good" else None
+        host_label = False if row.label == "never" else host_label
+        host = {row.title: host_label}
         already_dict.update(host)
     for row in rows:
         rows_list.append(row.title)
     Bayes = NaiveBayesClassifier(already_dict)
     predicted = Bayes.prediction(rows_list)
     for news in predicted:
-        s.query(News).filter(News.title == news).one().label = predicted[news]
+        host = "good" if predicted[news] else "maybe"
+        host = "never" if not predicted[news] else host
+        s.query(News).filter(News.title == news).one().label = host
     s.commit()
     classified_news = s.query(News).filter(News.label == "good").all()
     return template("news_template", rows=classified_news)
