@@ -36,7 +36,7 @@ $ python -m unittest discover
 
 ```sh
 $ pytest tests/test_caesar.py
-$ pytest tests/test_vigenere.py
+$ pytest python -m pytest .\tests\test_vigenere.py
 $ pytest tests/test_rsa.py
 ```
 
